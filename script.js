@@ -1,6 +1,6 @@
 // Variables globales del carrusel
 let currentSlide = 0;
-const totalSlides = 7;
+let totalSlides = 0; // Se inicializará al cargar la página
 let autoPlayInterval;
 
 // Función para abrir el carrusel
@@ -24,7 +24,9 @@ function updateCarousel() {
     const track = document.getElementById('carouselTrack');
     const indicators = document.querySelectorAll('.carousel-dot');
     
-    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    if (track) {
+        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
     
     indicators.forEach((dot, index) => {
         dot.classList.toggle('active', index === currentSlide);
@@ -63,7 +65,7 @@ function stopAutoPlay() {
     }
 }
 
-// Funciones para el moodboard
+// --- FUNCIONES AGREGADAS PARA EL MOODBOARD ---
 function openMoodboard() {
     document.getElementById('moodboardModal').classList.add('active');
     document.getElementById('moodboardOverlay').classList.add('active');
@@ -75,9 +77,14 @@ function closeMoodboard() {
     document.getElementById('moodboardOverlay').classList.remove('active');
     document.body.style.overflow = 'auto';
 }
+// --- FIN DE LAS NUEVAS FUNCIONES ---
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
+    const track = document.getElementById('carouselTrack');
+    if (track) {
+        totalSlides = track.children.length;
+    }
     
     // Navegación con teclado - UNIFICADA PARA AMBOS MODALES
     document.addEventListener('keydown', (e) => {
